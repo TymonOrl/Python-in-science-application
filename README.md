@@ -33,7 +33,7 @@ These texts are used as sample data for testing and demonstrating the program's 
 
 **Example usage:**
 ```bash
-python wordHistogram.py -i Heart_of_darkness.txt -hl 5 -m 3 -el the
+python wordHistogram.py Heart_of_darkness.txt -hl 5 -m 3 -el the
 ```
 ---
 
