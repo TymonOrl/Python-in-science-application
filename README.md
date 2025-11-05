@@ -17,7 +17,7 @@ loads a text file, counts the frequency of each word, and displays a histogram o
 
 It also accepts several command-line parameters to control how the program operates:
 
-- **`-i`** or **`--input`** – input filename *(required)*  
+- filename *(required)*  
 - **`-hl`** or **`--histlimit`** – number of words to display in the histogram  
 - **`-m`** or **`--minimal`** – minimum length of words to include  
 - **`-el`** or **`--excludedList`** – list of words to ignore  
