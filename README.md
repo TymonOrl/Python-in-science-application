@@ -12,8 +12,7 @@ which is a course at the **Warsaw University of Technology**, **Faculty of Physi
 
 ## 📊 Project 1 – Console Histogram of Words
 
-The program [`wordHistogram.py`](Console_Histogram_project01/wordHistogram.py)  
-loads a text file, counts the frequency of each word, and displays a histogram of word occurrences using the `ascii_graph` library.
+The program [`wordHistogram.py`](Console_Histogram(project01)/wordHistogram.py) loads a text file, counts the frequency of each word, and displays a histogram of word occurrences using the `ascii_graph` library.
 
 It also accepts several command-line parameters to control how the program operates:
 
