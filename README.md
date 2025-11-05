@@ -6,14 +6,32 @@ which is a course at the **Warsaw University of Technology**, **Faculty of Physi
 ---
 
 ## 📑 Table of Contents
-1. [Project 1 – Console Histogram of Words](#project-1--console-histogram-of-words)
+1. [Project 1 – Console Histogram of Words](#Console_Histogram(project01))
 
 ---
 
-## 🧩 Project 1 – Console Histogram of Words
-- Loads a text file and aggregates the frequency of each word.  
-- Displays a histogram of word occurrences using the `ascii_graph` library.  
-- Accepts parameters to control how the program operates (e.g., sorting, limits, file input).  
+## 📊 Project 1 – Console Histogram of Words
+The program [`wordHistogram.py`](Console_Histogram(project01)/wordHistogram.py)  
+loads a text file, counts the frequency of each word, and displays a histogram of word occurrences using the `ascii_graph` library.
+
+It also accepts several command-line parameters to control how the program operates:
+
+- **`--input`** – input filename *(required)*  
+- **`--top`** – number of words to display in the histogram  
+- **`--min-length`** – minimum length of words to include  
+- **`--exclude`** – list of words to ignore
+
+At the **Console Histogram** directory, there are two versions of Joseph Conrad's book *"Heart of Darkness"*, obtained from legal public-domain sources:
+
+- 🇬🇧 **English version:** [Project Gutenberg](https://www.gutenberg.org/ebooks/219)  
+- 🇵🇱 **Polish version:** [Wolne Lektury](https://wolnelektury.pl/katalog/lektura/conrad-jadro-ciemnosci.html)
+
+These texts are used as sample data for testing and demonstrating the program's functionality.
+
+
+**Example usage:**
+```bash
+python wordHistogram.py --input example.txt --top 20 --min-length 3 --exclude the,and,of
 
 ---
 
