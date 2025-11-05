@@ -1,2 +1,2 @@
 # Python-in-science-application
-This repository was created to post projects made for "Python w Zastosowaniach Naukowych", witch is a subject on Warsaw University od Technology on Physics Faculty.
+This repository was created to share projects developed for "Python w Zastosowaniach Naukowych", which is a course at the Warsaw University of Technology, Faculty of Physics.
