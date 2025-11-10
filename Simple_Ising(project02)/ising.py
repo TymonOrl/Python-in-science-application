@@ -4,6 +4,28 @@ from scipy import signal
 
 
 class ising_simulation:
+    """
+    Class for simulating 2D Ising model using Metropolis algorithm.
+
+    Attributes:
+        arr_size (int): Size of the square lattice (arr_size x arr_size).
+        j (float): Interaction strength between neighboring spins.
+        beta (float): Inverse temperature (1/kT).
+        force_B (float): External magnetic field strength.
+        bigsteps (int): Number of big steps (each consisting of multiple small steps).
+        ups_density (float): Initial density of up spins (+1).
+        img_filename (str): Filename to save the final spin configuration image.
+        animation_filename (str): Filename to save the animation of the simulation.
+        magnetisation_filename (str): Filename to save the magnetization data.
+
+    Methods:
+        show_array(): Displays the current spin configuration as an image.
+        calculate_hamiltionian(): Calculates and prints the Hamiltonian of the current configuration.
+        small_step(): Performs a single Metropolis update on a randomly chosen spin.
+        big_step(): Performs a full sweep of Metropolis updates over the entire lattice.
+        simulate(): Runs the simulation for the specified number of big steps.
+        calculate_M(): Calculates and returns the magnetization of the current configuration.
+    """
     def __init__(self, 
                  arr_size, 
                  j, 
@@ -21,6 +43,8 @@ class ising_simulation:
         self.ups_density = ups_density
         self.img_filename = img_filename
         self.animation_filename = animation_filename
+        if animation_filename != None:
+            self.animation_frames = []
         self.magnetisation_filename = magnetisation_filename
         self.hamiltionian = 0
         self.neighborhood_kernel = np.array([[0, 1, 0],
@@ -33,7 +57,7 @@ class ising_simulation:
         self.M.flat[idxes] = 1
 
 
-    def show_array(self):
+    def draw_array(self, number, show=False):
         image_size = 1000
         image = Image.new('RGB', (image_size, image_size), 'black')
         draw = ImageDraw.Draw(image)
@@ -53,7 +77,14 @@ class ising_simulation:
 
                 draw.rectangle([x*dw, y*dw, (x+1)*dw, (y+1)*dw], fill=color)
 
-        image.show()
+        if show == True:
+            image.show()
+
+        if self.img_filename != None:
+            image.save(f'{self.img_filename}{number:04d}.png')
+
+        if self.animation_filename != None:
+            self.animation_frames.append(image)
 
 
     def calculate_hamiltionian(self):
@@ -63,6 +94,7 @@ class ising_simulation:
             - self.force_B * self.M.sum()
         print(self.hamiltionian)
         
+
     def small_step(self):
         idx_x, idx_y = np.random.randint(0, self.M.shape[0], size=2)
         s_i = self.M[idx_x, idx_y]
@@ -97,14 +129,41 @@ class ising_simulation:
         for _ in range(self.M.size):
             self.small_step()
 
-    def simulate(self):
-        for _ in range(self.bigsteps):
-            self.big_step()
 
+    # Visualisation and output methods
     def calculate_M(self):
         return 1/self.M.size * self.M.sum()
+    
 
-        
+    def save_M(self, step, create_file=False):
+        if self.magnetisation_filename != None:
+            if create_file == True:
+                with open(self.magnetisation_filename, 'w') as f:
+                    f.write('Step\tMagnetisation\n')
+
+            with open(self.magnetisation_filename, 'a') as f:
+                f.write(f'{step}\t{self.calculate_M()}\n')
+
+    # Main simulation method
+    def simulate(self):
+        i = 0
+        self.draw_array(i)
+        self.save_M(i, True)
+        i += 1
+        for _ in range(self.bigsteps):
+            self.big_step()
+            self.draw_array(i)
+            self.save_M(i)
+            i += 1
+
+        if self.animation_filename != None:
+            self.animation_frames[0].save(self.animation_filename,
+                                          save_all=True,
+                                          append_images=self.animation_frames[1:],
+                                          duration=200)
+
+
+
 if __name__ == '__main__':
     sim1 = ising_simulation(arr_size= 100, 
                             j = 1, 
@@ -112,9 +171,7 @@ if __name__ == '__main__':
                             force_B = 1, 
                             amount_of_steps = 10, 
                             ups_density = 0.65, 
-                            img_filename = None,
-                            animation_filename = None,
-                            magnetisation_filename = None)
-    sim1.show_array()
+                            img_filename = 'Python-in-science-application/Simple_Ising(project02)/images/ising_',
+                            animation_filename = 'Python-in-science-application/Simple_Ising(project02)/animated_ising.gif',
+                            magnetisation_filename = 'Python-in-science-application/Simple_Ising(project02)/magnetisation.txt')
     sim1.simulate()
-    sim1.show_array()
